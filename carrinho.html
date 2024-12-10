@@ -111,7 +111,7 @@
             let carrinho = JSON.parse(localStorage.getItem('carrinho'));
             let total = 0;
             carrinho.forEach((produto) => {
-                let preco = produto.preco;
+                let preco = produto.preço;
                 preco = preco.replace('R$','')
                 preco = preco.replace(',','.')
                 let quantidade = produto.quantidade;
