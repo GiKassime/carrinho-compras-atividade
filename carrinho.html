@@ -23,35 +23,8 @@
 
         <div class="carrinho-produtos">
             
-            <!-- item 1 -->
-            <div class="item-carrinho">
-                <div class="item">
-                    <img src="https://picsum.photos/300/500" alt="Imagem do Produto" class="item-img">
-                    <div class="item-info">
-                        <h2>Nome do Produto</h2>
-                        <p class="preco">R$ 50,00</p>
-                        <label for="quantidade">Quantidade:</label>
-                        <input type="number" id="quantidade" name="quantidade" min="1" value="1">
-                    </div>
-                </div>
-
-                <button class="botao-remover">Remover</button>
-            </div>
-
-            <!-- item 2 -->
-            <div class="item-carrinho">
-                <div class="item">
-                    <img src="https://picsum.photos/300/500" alt="Imagem do Produto" class="item-img">
-                    <div class="item-info">
-                        <h2>Nome do Produto</h2>
-                        <p class="preco">R$ 50,00</p>
-                        <label for="quantidade">Quantidade:</label>
-                        <input type="number" id="quantidade" name="quantidade" min="1" value="1">
-                    </div>
-                </div>
-
-                <button class="botao-remover">Remover</button>
-            </div>
+            <!--Aqui serão colocados os items do carrinho dinamicamente -->
+                        
 
         </div>
 
@@ -83,7 +56,16 @@
             let item = document.createElement('div');
             //item.classList.add = 'item';
             item.classList.add('item');
+            
+            let imagem = document.createElement('img');
+            //item.classList.add = 'item';
+            imagem.src = "https://picsum.photos/300/500";
+            imagem.classList.add('item-img')
 
+            let remover = document.createElement('button');
+            remover.textContent = "Remover";
+            remover.classList.add('botao-remover')
+           
             let itemInfo = document.createElement('div');
             itemInfo.classList.add('item-info');
 
@@ -99,15 +81,29 @@
             quantidadeProduto.type = "number"
             quantidadeProduto.value = itemLista.quantidade;
 
+            item.appendChild(imagem)
             itemInfo.appendChild(nomeProduto);
             itemInfo.appendChild(precoProduto);
             itemInfo.appendChild(quantidadeProduto);
-
             item.appendChild(itemInfo);
-            itemCarrinho.appendChild(item);
+            itemCarrinho.prepend(item);
 
             let carrinho = document.querySelector('.carrinho-produtos');
             carrinho.appendChild(itemCarrinho);
+            itemCarrinho.appendChild(remover)
+
+            remover.addEventListener('click',()=>{
+                itemCarrinho.remove(itemCarrinho)
+
+                let carrinho = JSON.parse(localStorage.getItem('carrinho'));
+                carrinho.forEach((produto,index) => {
+                    if(produto.nome == itemLista.nome){
+                        carrinho.splice(index,1)
+                    }
+                });
+                carrinho = JSON.stringify(carrinho)
+                localStorage.setItem('carrinho', carrinho)
+            })
 
         }
 
