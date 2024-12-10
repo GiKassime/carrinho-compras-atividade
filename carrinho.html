@@ -29,7 +29,7 @@
         </div>
 
         <div class="total">
-            <p>Total: R$ 50,00</p>
+            <p>Total: R$ <span class="total-compra"></span></p>
             <button class="botao-comprar">Finalizar Compra</button>
         </div>
     </main>
@@ -105,7 +105,25 @@
                 localStorage.setItem('carrinho', carrinho)
             })
 
+        }//fim criar item carrinho
+
+        function atualizarTotal(){
+            let carrinho = JSON.parse(localStorage.getItem('carrinho'));
+            let total = 0;
+            carrinho.forEach((produto) => {
+                let preco = produto.preco;
+                preco = preco.replace('R$','')
+                preco = preco.replace(',','.')
+                let quantidade = produto.quantidade;
+                total += preco *quantidade;
+                
+            });
+            let totalCompra = document.querySelector('.total-compra')
+
+            totalCompra.textContent = total;
         }
+
+        atualizarTotal();
 
 
     </script>
